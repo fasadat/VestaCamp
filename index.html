@@ -1,0 +1,205 @@
+<html>
+<head>
+    <title></title>
+
+    <style type="text/css">
+
+        body{
+            margin:0px;
+            text-align: center;
+            font-family:tahoma;
+            font-size:11px;
+            color:#e5e5e5;
+
+        }
+        #firstPage{
+            background-image: url("welcome.jpeg");
+            background-repeat: no-repeat;
+        background-size: 100% 100%;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0px;
+        }
+        #secondPage{
+            display: none;
+           background-image: url("1005.jpg");
+            background-size: 100% 100%;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+        #win{
+            display: none;
+           background-image: url("table.jpg");
+            background-size: 100% 100%;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        #container {
+            width:300px;
+            height:30px;
+            position: relative;
+            top: 80%;
+            border:3px solid #e5e5e5;
+            background-color:lightblue;
+            margin:50px auto;
+            border-radius:3px;
+
+        }
+
+        #slider {
+
+            background-color: cadetblue;
+            height:100%;
+            width:60px;
+            cursor: pointer;
+            position: relative;
+            border-radius:3px;
+
+        }
+
+        #magnifier {
+            background-image: url("magnifier.png");
+            position: relative;
+            top: 50%;
+            left: 50%;
+            width:10%;
+            height:15%;
+            background-repeat: no-repeat;
+        }
+        #circle {
+            background-image: url("circle.png");
+            position: relative;
+            top: 23%;
+            left: 45%;
+            width:25%;
+            height:25%;
+            background-repeat: no-repeat;
+            display: none;
+        }
+        #leftWin{
+            background-image: url("leftWin.jpeg");
+            position: absolute;
+            top: 0px;
+            background-size: 100%;
+            background-repeat: no-repeat;
+            display: none;
+            height: 100%;
+            width: 100%;
+
+        }
+        #rightWin{
+            background-image: url("rightWin.jpeg");
+            position: absolute;
+            top: 0px;
+            background-size: 100%;
+            background-repeat: no-repeat;
+            display: none;
+            height: 100%;
+            width: 100%;
+        }
+
+    </style>
+
+
+</head>
+<body id="bd">
+<div id="firstPage">
+    <div id="container">
+        <div id="slider"></div>
+    </div>
+
+    <div id="message"></div>
+</div>
+<div id="secondPage">
+
+    <div id="magnifier"></div>
+    <div id="circle"></div>
+
+</div>
+<div id="win">
+    <div id="leftWin"></div>
+    <div id="rightWin"></div>
+</div>
+
+
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.js"></script>
+
+
+<script type="text/javascript">
+
+    $("#secondPage").offset({top : $('#firstPage').height()});
+    $('#slider').draggable({
+        axis: "x",
+        containment: "parent",
+
+        stop: function() {
+            var sliderW = $('#slider').width(),
+                    sliderTot = $(this).position().left+sliderW;
+            containerW = $('#container').width();
+
+            if(sliderTot == containerW){
+
+                var h = $('#firstPage').height();
+                console.log("h is "+h);
+                $('#firstPage').animate({top: -1 *h +'px'}, 1000);
+                $('#secondPage').show();
+                $('#secondPage').animate({top: '0px'}, 1000);
+
+            }
+            else{
+                $(this).animate({
+                    left:0
+                });
+            }
+        }
+    });
+
+$('#magnifier').click(function () {
+
+    var factor = 2;
+    $('#secondPage').animate({
+
+        left: '-=' + $('#secondPage').width() / factor,
+        width: $('#secondPage').width() * factor
+    });
+
+    $('#magnifier').css({'display' : 'none'});
+    $('#secondPage').hide("scale",{}, 1000, function () {
+        $('#win').show('scale', 2000);
+        var w = window.innerWidth / 2;
+        $('#leftWin').width(w);
+        $('#rightWin').width(w);
+
+        $('#rightWin').offset({left: w});
+        $('#leftWin').show();
+        $('#rightWin').show();
+
+        $('#leftWin').delay(4000).animate( {
+            left : -1 * $('#leftWin').width()
+        }, 4000);
+        $('#rightWin').delay(4000).animate( {
+            left : '+=' + $('#rightWin').width()
+        }, 4000);
+
+    });
+
+
+
+});
+
+    $('#magnifier').mouseover(function () {
+        $('#magnifier').css({'zoom' : '110%'}, 'slow');
+    })
+    $('#magnifier').mouseout(function () {
+        $('#magnifier').css({'zoom': '100%'}, 'slow');
+    })
+
+</script>
+</body>
+</html>
