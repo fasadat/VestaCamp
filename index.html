@@ -13,7 +13,7 @@
 
         }
         #firstPage{
-            background-image: url("welcome.jpeg");
+            background-image: url("up5.jpeg");
             background-repeat: no-repeat;
         background-size: 100% 100%;
             width: 100%;
@@ -23,7 +23,7 @@
         }
         #secondPage{
             display: none;
-           background-image: url("1005.jpg");
+           background-image: url("down5.jpeg");
             background-size: 100% 100%;
             position: absolute;
             width: 100%;
@@ -48,6 +48,11 @@
             margin:50px auto;
             border-radius:3px;
 
+        }
+        #welcome{
+            position: relative;
+            top: 10%;
+            font-size: 20px;
         }
 
         #slider {
@@ -105,14 +110,26 @@
     </style>
 
 
+    //<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+
+
+    <script src="jquery-1.11.1.min.js"></script>
+    <script src="jquery-ui.min.js"></script>
+    <script src="jquery.textillate.js"></script>
+    <script src="jquery.lettering.js"></script>
+    <script src="jquery.fittext.js"></script>
+
+    <script src="main.js"></script>
 </head>
 <body id="bd">
 <div id="firstPage">
+
+    <div id="welcome">Welcome To Vesta Restaurant</div>
     <div id="container">
-        <div id="slider"></div>
+        <div id="slider">slide to enter</div>
     </div>
 
-    <div id="message"></div>
+
 </div>
 <div id="secondPage">
 
@@ -127,79 +144,5 @@
 
 
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.js"></script>
-
-
-<script type="text/javascript">
-
-    $("#secondPage").offset({top : $('#firstPage').height()});
-    $('#slider').draggable({
-        axis: "x",
-        containment: "parent",
-
-        stop: function() {
-            var sliderW = $('#slider').width(),
-                    sliderTot = $(this).position().left+sliderW;
-            containerW = $('#container').width();
-
-            if(sliderTot == containerW){
-
-                var h = $('#firstPage').height();
-                console.log("h is "+h);
-                $('#firstPage').animate({top: -1 *h +'px'}, 1000);
-                $('#secondPage').show();
-                $('#secondPage').animate({top: '0px'}, 1000);
-
-            }
-            else{
-                $(this).animate({
-                    left:0
-                });
-            }
-        }
-    });
-
-$('#magnifier').click(function () {
-
-    var factor = 2;
-    $('#secondPage').animate({
-
-        left: '-=' + $('#secondPage').width() / factor,
-        width: $('#secondPage').width() * factor
-    });
-
-    $('#magnifier').css({'display' : 'none'});
-    $('#secondPage').hide("scale",{}, 1000, function () {
-        $('#win').show('scale', 2000);
-        var w = window.innerWidth / 2;
-        $('#leftWin').width(w);
-        $('#rightWin').width(w);
-
-        $('#rightWin').offset({left: w});
-        $('#leftWin').show();
-        $('#rightWin').show();
-
-        $('#leftWin').delay(4000).animate( {
-            left : -1 * $('#leftWin').width()
-        }, 4000);
-        $('#rightWin').delay(4000).animate( {
-            left : '+=' + $('#rightWin').width()
-        }, 4000);
-
-    });
-
-
-
-});
-
-    $('#magnifier').mouseover(function () {
-        $('#magnifier').css({'zoom' : '110%'}, 'slow');
-    })
-    $('#magnifier').mouseout(function () {
-        $('#magnifier').css({'zoom': '100%'}, 'slow');
-    })
-
-</script>
 </body>
 </html>
